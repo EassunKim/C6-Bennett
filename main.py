@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from discord import Intents, Message
 from discord.ext import commands
 from responses.responses import get_responses
-from responses.roll import roll
 
 # Load environment variables
 load_dotenv()
@@ -13,10 +12,16 @@ TOKEN: str = os.getenv('DISCORD_TOKEN')
 intents: Intents = Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(command_prefix="$", intents=intents)
+#command imports
+bot = commands.Bot(command_prefix="$", intents=intents, help_command=None)
+
+from responses.roll import roll #roll
 bot.add_command(roll)
 
-# COMMANDS
+from responses.help.custom_help import setup as help_setup #help
+help_setup(bot)
+
+# responses
 async def send_message(message: Message, user_message: str) -> None:
     if not user_message:
         print('Error with intents, message was empty')
