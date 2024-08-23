@@ -21,6 +21,9 @@ bot.add_command(roll)
 from responses.help.custom_help import setup as help_setup #help
 help_setup(bot)
 
+from responses.lfg import lfg #lfg
+bot.add_command(lfg)
+
 # responses
 async def send_message(message: Message, user_message: str) -> None:
     if not user_message:
@@ -50,12 +53,21 @@ async def on_message(message: Message) -> None:
     if message.content.startswith("$"):
         # Use the bot's process_commands to handle commands
         await bot.process_commands(message)
+        
     else:
         # Handle regular messages
         user_message: str = message.content
         await send_message(message, user_message)
 
-# Run the bot
+#Command error handling
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send('Sorry that command was not found')
+    elif isinstance(error, commands.MissingRequiredArgument):
+        await ctx.reply('youre missing something important, try $help')
+
+#Run the bot
 def main() -> None:
     bot.run(TOKEN)
 

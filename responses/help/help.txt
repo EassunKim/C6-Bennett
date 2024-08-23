@@ -1,7 +1,10 @@
-> ## **Bot Help**
-> 
-> ### **Commands:**
-> `$help` - Displays this help message. or try `$help <command>`
-> `$roll <max_value>` - generates a number between 0 and max. Defaults to 100
-> ### **Responses:**
-> `hi` - sends :3
+```C6 Bennett Help
+
+COMMANDS:
+`$help` - Displays this help message. or try `$help <command>`
+`$roll <max_value>` - generates a number between 0 and max. Defaults to 100
+`$lfg "<description>" <# of people> <@role>` - creates an attendance list for an activity
+ 
+RESPONSES:
+`hi` - sends :3
+```
