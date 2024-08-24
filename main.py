@@ -6,14 +6,22 @@ from dotenv import load_dotenv
 from discord import Intents, Message
 from discord.ext import commands, tasks
 from responses.responses import get_responses
+from pymongo import MongoClient
 
 # Load environment variables
 load_dotenv()
 TOKEN: str = os.getenv('DISCORD_TOKEN')
+MONGO: str = os.getenv('MONGO')
 
 # Setup
 intents: Intents = Intents.default()
 intents.message_content = True
+
+#connect to MongoDB
+mongo_client = MongoClient(MONGO)
+db = mongo_client['ticks2.0']
+collection = db['pins']
+
 
 #command imports
 bot = commands.Bot(command_prefix="$", intents=intents, help_command=None)
