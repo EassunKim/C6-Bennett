@@ -5,3 +5,4 @@ def get_responses(user_input: str) -> str:
 
     if lowered == 'hi':
         return ':3'
+    

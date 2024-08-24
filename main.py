@@ -1,7 +1,10 @@
 import os
+import random
+import discord
+import asyncio
 from dotenv import load_dotenv
 from discord import Intents, Message
-from discord.ext import commands
+from discord.ext import commands, tasks
 from responses.responses import get_responses
 
 # Load environment variables
@@ -43,11 +46,31 @@ async def send_message(message: Message, user_message: str) -> None:
 async def on_ready() -> None:
     print(f'BOUKEN DA BOUKEN')
 
+    #status cycle
+    with open('rescources/statuses.txt') as file:
+        statuses = [line.rstrip("'") for line in file]
+    status.start(statuses)
+
+    
+
+#bot status
+@tasks.loop(seconds = 300)
+async def status(statuses):
+    current_status=random.choice(statuses)
+    await bot.change_presence(activity=discord.CustomActivity(name = current_status))
+
+
 # MESSAGE HANDLING
 @bot.event
 async def on_message(message: Message) -> None:
     if message.author == bot.user:
         return
+    
+    #sleephill
+    if message.author.id == 217028904890793984:
+        delete = random.randint(0, 100)
+        if delete <= 1:
+            await message.delete()
 
     # Check if the message is a command
     if message.content.startswith("$"):
